@@ -1,7 +1,7 @@
 <!--?xml version="1.0" encoding="UTF-8" ?-->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="invoce.dao.TestDao">
-    <select id="selectAll" resultType="invoice.systena.bean.TestBean">
+<mapper namespace="com.example.invoce.dao.TestDao">
+    <select id="selectAll" resultType="com.example.invoice.systena.bean.TestBean">
         select * from demo
     </select>
 </mapper>

@@ -45,9 +45,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile('org.projectlombok:lombok:1.16.6')
-    compile("org.mybatis:mybatis:3.3.0")
-    compile("org.mybatis:mybatis-spring:1.2.3")
+    compile("org.projectlombok:lombok:1.16.6")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("mysql:mysql-connector-java")
+    compile("com.fasterxml.jackson.core:jackson-databind")
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

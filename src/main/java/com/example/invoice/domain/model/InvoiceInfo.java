@@ -1,80 +1,76 @@
 package com.example.invoice.domain.model;
 
 import java.sql.Date;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-@Table(name = "invoice")
-public class Invoice implements java.io.Serializable {
+public class InvoiceInfo implements java.io.Serializable {
 
   /**
-   * シリアルバージョンUID.
+   * シリアルバージョンUID
    */
   private static final long serialVersionUID = 1L;
 
   /**
-   * 請求書管理番号.
+   * 請求書管理番号
    */
   private int invoiceNo;
   /**
-   * 顧客管理番号.
+   * 顧客管理番号
    */
   private int clientNo;
   /**
-   * 請求状態.
+   * 請求状態
    */
   private char invoiceStatus;
   /**
-   * 請求書作成日.
+   * 請求書作成日
    */
   private Date invoiceCreateDate;
   /**
-   * 請求書件名.
+   * 請求書件名
    */
   private String invoiceTitle;
   /**
-   * 請求金額.
+   * 請求金額
    */
   private int invoiceAmt;
   /**
-   * 消費税.
+   * 消費税
    */
   private int taxAmt;
   /**
-   * 請求期間開始日.
+   * 請求期間開始日
    */
   private Date invoiceStartDate;
   /**
-   * 請求期間終了日.
+   * 請求期間終了日
    */
   private Date invoiceEndDate;
   /**
-   * 備考.
+   * 備考
    */
   private String invoiceNote;
   /**
-   * 登録ユーザID.
+   * 登録ユーザID
    */
   private String createUser;
   /**
-   * 登録日時.
+   * 登録日時
    */
   private Date createDatetime;
   /**
-   * 更新ユーザID.
+   * 更新ユーザID
    */
   private String updateUser;
   /**
-   * 更新日時.
+   * 更新日時
    */
   private Date updateDatetime;
   /**
-   * 削除フラグ.
+   * 削除フラグ
    */
   private char delFlg;
 }
