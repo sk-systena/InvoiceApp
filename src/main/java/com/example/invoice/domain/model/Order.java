@@ -3,6 +3,7 @@ package com.example.invoice.domain.model;
 import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Order implements java.io.Serializable {
   /**
    * 注文管理番号
    */
+  @Id
   @Column(name = "order_no")
   private int orderNo;
   /**

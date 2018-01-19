@@ -7,11 +7,13 @@ import com.example.invoice.domain.repository.InvoiceRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author kesuzuki
  *
  */
+@Service
 public class SearchService {
 
 
@@ -34,15 +36,19 @@ public class SearchService {
 
   /**
    * 請求書情報リストを取得.
-   * 
-   * @param searchListReq
    *
-   * @param invoiceId Integer
-   * @return ivInfoList List<InvoiceInfo>
+   * @param searchListReq InvoiceListSearchRequest
+   * @return ivInfoList 請求書情報リスト
+   *
    */
   public List<InvoiceInfo> invoiceFindMany(InvoiceListSearchRequest searchListReq) {
     List<InvoiceInfo> ivInfoList = new ArrayList<InvoiceInfo>();
-    Invoice result = invoiceRepository.findManyByInvoices();
+    List<Invoice> result = invoiceRepository.findManyByInvoices(0);
+    for (Invoice row : result) {
+      InvoiceInfo ivInfo = new InvoiceInfo();
+      ivInfo.setClientNo(row.getClientNo());
+      ivInfoList.add(ivInfo);
+    }
     return ivInfoList;
   }
 

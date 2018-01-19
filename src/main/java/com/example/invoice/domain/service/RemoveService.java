@@ -2,11 +2,13 @@ package com.example.invoice.domain.service;
 
 import com.example.invoice.domain.model.InvoiceInfo;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * @author kesuzuki
  *
  */
+@Service
 public class RemoveService {
 
   public InvoiceInfo findOne(Integer invoiceId) {
