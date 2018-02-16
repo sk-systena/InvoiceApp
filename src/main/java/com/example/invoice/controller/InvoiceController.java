@@ -1,18 +1,18 @@
 package com.example.invoice.controller;
 
-import com.example.invoice.domain.model.InvoiceInfo;
-import com.example.invoice.domain.model.InvoiceListSearchRequest;
-import com.example.invoice.domain.model.InvoiceRegistRequest;
+import com.example.invoice.domain.model.InvoiceListSearchRequestDto;
+import com.example.invoice.domain.model.InvoiceListSearchResponseDto;
+import com.example.invoice.domain.model.InvoiceRegistRequestDto;
+import com.example.invoice.domain.model.InvoiceRegistResponseDto;
+import com.example.invoice.domain.model.InvoiceSearchRequestDto;
+import com.example.invoice.domain.model.InvoiceSearchResponseDto;
 import com.example.invoice.domain.service.RegistService;
 import com.example.invoice.domain.service.RemoveService;
 import com.example.invoice.domain.service.SearchService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -30,22 +30,23 @@ public class InvoiceController {
   private RemoveService removeService;
 
   @RequestMapping(value = "/invoice/{id}", method = RequestMethod.GET)
-  public InvoiceInfo search(@PathVariable Integer id) {
-    return searchService.invoiceFindOne(id);
+  public InvoiceSearchResponseDto search(@ModelAttribute InvoiceSearchRequestDto searchReq) {
+    return searchService.invoiceFindOne(searchReq);
   }
 
   @RequestMapping(value = "/invoices/", method = RequestMethod.GET)
-  public List<InvoiceInfo> searchList(@ModelAttribute InvoiceListSearchRequest searchListReq) {
+  public InvoiceListSearchResponseDto searchList(
+      @ModelAttribute InvoiceListSearchRequestDto searchListReq) {
     return searchService.invoiceFindMany(searchListReq);
   }
 
   @RequestMapping(value = "/invoice/", method = RequestMethod.DELETE)
-  public Integer remove(@RequestParam Integer id) {
-    return removeService.invoiceDelete(id);
+  public InvoiceRegistResponseDto remove(@ModelAttribute InvoiceRegistRequestDto removeReq) {
+    return removeService.invoiceDelete(removeReq);
   }
 
-  @RequestMapping(value = "/invoice/1", method = RequestMethod.POST)
-  public InvoiceInfo regist(@ModelAttribute InvoiceRegistRequest registReq) {
+  @RequestMapping(value = "/invoice/", method = RequestMethod.POST)
+  public InvoiceRegistResponseDto regist(@ModelAttribute InvoiceRegistRequestDto registReq) {
     return registService.invoiceRegister(registReq);
   }
 

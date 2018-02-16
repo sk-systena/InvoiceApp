@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
  * @author kesuzuki
  *
  */
-public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
+public interface ClientRepository extends JpaRepository<OrderEntity, Integer> {
 
   @Query(value = "select * from order where client_no = :clientNo "
       + "and create_datetime => :startDate" + " and create_datetime =< :endDate "

@@ -1,9 +1,10 @@
 package com.example.invoice.domain.service;
 
-import com.example.invoice.domain.model.Invoice;
+import com.example.invoice.domain.model.InvoiceEntity;
 import com.example.invoice.domain.model.InvoiceInfo;
-import com.example.invoice.domain.model.InvoiceRegistRequest;
-import com.example.invoice.domain.model.Order;
+import com.example.invoice.domain.model.InvoiceRegistRequestDto;
+import com.example.invoice.domain.model.InvoiceRegistResponseDto;
+import com.example.invoice.domain.model.OrderEntity;
 import com.example.invoice.domain.repository.InvoiceRepository;
 import com.example.invoice.domain.repository.OrderRepository;
 import java.util.Date;
@@ -30,15 +31,14 @@ public class RegistService {
    * @param registReq InvoiceRegistRequest 注文情報
    * @return ivInfo 請求書情報
    */
-  public InvoiceInfo invoiceRegister(InvoiceRegistRequest registReq) {
-
-    List<Order> orderList = orderRepository.find_priod_order(registReq.getInvoiceStartDate(),
+  public InvoiceRegistResponseDto invoiceRegister(InvoiceRegistRequestDto registReq) {
+    List<OrderEntity> orderList = orderRepository.find_priod_order(registReq.getInvoiceStartDate(),
         registReq.getInvoiceEndDate(), registReq.getClientNo());
 
-    Invoice invoiceEntity = new Invoice();
+    InvoiceEntity invoiceEntity = new InvoiceEntity();
     int amt = 0;
     Double tax = 0.08;
-    for (Order order : orderList) {
+    for (OrderEntity order : orderList) {
       amt += order.getItemPrice() * order.getItemCount();
     }
     invoiceEntity.setInvoiceAmt(amt);
@@ -64,7 +64,8 @@ public class RegistService {
     invoiceEntity.setDelFlg(delFlg);
     invoiceRepository.save(invoiceEntity);
 
+    InvoiceRegistResponseDto dto = new InvoiceRegistResponseDto();
     InvoiceInfo invoiceInfo = new InvoiceInfo();
-    return invoiceInfo;
+    return dto;
   }
 }

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InvoiceListSearchRequest implements java.io.Serializable {
+public class InvoiceListSearchRequestDto implements java.io.Serializable {
 
   /**
    * シリアルバージョンUID

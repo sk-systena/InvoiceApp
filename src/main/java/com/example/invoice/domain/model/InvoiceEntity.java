@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "invoice")
-public class Invoice implements java.io.Serializable {
+public class InvoiceEntity implements java.io.Serializable {
 
   /**
    * シリアルバージョンUID.

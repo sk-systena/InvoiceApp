@@ -1,7 +1,7 @@
 package com.example.invoice.domain.service;
 
-import com.example.invoice.domain.model.InvoiceInfo;
-import java.util.List;
+import com.example.invoice.domain.model.InvoiceRegistRequestDto;
+import com.example.invoice.domain.model.InvoiceRegistResponseDto;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,17 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class RemoveService {
 
-  public InvoiceInfo findOne(Integer invoiceId) {
+  public InvoiceRegistResponseDto invoiceDelete(InvoiceRegistRequestDto removeReq) {
+    InvoiceRegistResponseDto dto = new InvoiceRegistResponseDto();
     // TODO 自動生成されたメソッド・スタブ
-    return null;
-  }
-
-  public List<InvoiceInfo> find() {
-    // TODO 自動生成されたメソッド・スタブ
-    return null;
-  }
-
-  public Integer invoiceDelete(Integer invoiceId) {
-    return invoiceId;
+    return dto;
   }
 }

@@ -1,8 +1,11 @@
 package com.example.invoice.domain.service;
 
-import com.example.invoice.domain.model.Invoice;
+import com.example.invoice.domain.model.InvoiceEntity;
 import com.example.invoice.domain.model.InvoiceInfo;
-import com.example.invoice.domain.model.InvoiceListSearchRequest;
+import com.example.invoice.domain.model.InvoiceListSearchRequestDto;
+import com.example.invoice.domain.model.InvoiceListSearchResponseDto;
+import com.example.invoice.domain.model.InvoiceSearchRequestDto;
+import com.example.invoice.domain.model.InvoiceSearchResponseDto;
 import com.example.invoice.domain.repository.InvoiceRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +26,17 @@ public class SearchService {
   /**
    * 請求書情報を取得.
    *
-   * @param invoiceId Integer
+   * @param searchReq Integer
    * @return ivInfo InvoiceInfo
    */
-  public InvoiceInfo invoiceFindOne(Integer invoiceId) {
+  public InvoiceSearchResponseDto invoiceFindOne(InvoiceSearchRequestDto searchReq) {
+    InvoiceSearchResponseDto dto = new InvoiceSearchResponseDto();
     InvoiceInfo ivInfo = new InvoiceInfo();
-    Invoice result = invoiceRepository.findByInvoice(invoiceId);
+    InvoiceEntity result = invoiceRepository.findByInvoice(searchReq.getInvoiceNo());
     ivInfo.setClientNo(result.getClientNo());
 
-    return ivInfo;
+    dto.setInvoiceInfo(ivInfo);
+    return dto;
   }
 
   /**
@@ -41,15 +46,17 @@ public class SearchService {
    * @return ivInfoList 請求書情報リスト
    *
    */
-  public List<InvoiceInfo> invoiceFindMany(InvoiceListSearchRequest searchListReq) {
+  public InvoiceListSearchResponseDto invoiceFindMany(InvoiceListSearchRequestDto searchListReq) {
+    InvoiceListSearchResponseDto dto = new InvoiceListSearchResponseDto();
     List<InvoiceInfo> ivInfoList = new ArrayList<InvoiceInfo>();
-    List<Invoice> result = invoiceRepository.findManyByInvoices(0);
-    for (Invoice row : result) {
+    List<InvoiceEntity> result = invoiceRepository.findManyByInvoices(0);
+    for (InvoiceEntity row : result) {
       InvoiceInfo ivInfo = new InvoiceInfo();
       ivInfo.setClientNo(row.getClientNo());
       ivInfoList.add(ivInfo);
     }
-    return ivInfoList;
+    dto.setInvoiceInfo(ivInfoList);
+    return dto;
   }
 
 }
