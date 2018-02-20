@@ -14,9 +14,13 @@ public class InvoiceRegistResponseDto implements java.io.Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * 顧客管理番号.
+   * 請求書番号.
    */
-  private int clientNo;
+  private int invoiceNo;
+  /**
+   * 顧客名称.
+   */
+  private String clientName;
   /**
    * 請求状態.
    */
@@ -25,6 +29,14 @@ public class InvoiceRegistResponseDto implements java.io.Serializable {
    * 請求書件名.
    */
   private String invoiceTitle;
+  /**
+   * 請求金額.
+   */
+  private int invoiceAmt;
+  /**
+   * 税額.
+   */
+  private int taxAmt;
   /**
    * 請求期間開始日.
    */
@@ -37,8 +49,4 @@ public class InvoiceRegistResponseDto implements java.io.Serializable {
    * 備考.
    */
   private String invoiceNote;
-  /**
-   * 登録ユーザID.
-   */
-  private String userId;
 }

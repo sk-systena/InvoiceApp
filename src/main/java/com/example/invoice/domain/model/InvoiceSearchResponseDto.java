@@ -8,12 +8,12 @@ import lombok.Setter;
 public class InvoiceSearchResponseDto implements java.io.Serializable {
 
   /**
-   * シリアルバージョンUID
+   * シリアルバージョンUID.
    */
   private static final long serialVersionUID = 1L;
 
   /**
-   * 請求書情報
+   * 請求書情報.
    */
   private InvoiceInfo invoiceInfo;
 }

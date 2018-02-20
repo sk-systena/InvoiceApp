@@ -1,11 +1,12 @@
 package com.example.invoice.domain.service;
 
+import com.example.invoice.domain.model.ClientEntity;
 import com.example.invoice.domain.model.InvoiceEntity;
 import com.example.invoice.domain.model.InvoiceInfo;
 import com.example.invoice.domain.model.InvoiceListSearchRequestDto;
 import com.example.invoice.domain.model.InvoiceListSearchResponseDto;
-import com.example.invoice.domain.model.InvoiceSearchRequestDto;
 import com.example.invoice.domain.model.InvoiceSearchResponseDto;
+import com.example.invoice.domain.repository.ClientRepository;
 import com.example.invoice.domain.repository.InvoiceRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +24,19 @@ public class SearchService {
   @Autowired
   InvoiceRepository invoiceRepository;
 
+  @Autowired
+  ClientRepository clientRepository;
+
   /**
    * 請求書情報を取得.
    *
-   * @param searchReq Integer
+   * @param id Integer
    * @return ivInfo InvoiceInfo
    */
-  public InvoiceSearchResponseDto invoiceFindOne(InvoiceSearchRequestDto searchReq) {
+  public InvoiceSearchResponseDto invoiceFindOne(Integer id) {
     InvoiceSearchResponseDto dto = new InvoiceSearchResponseDto();
     InvoiceInfo ivInfo = new InvoiceInfo();
-    InvoiceEntity result = invoiceRepository.findByInvoice(searchReq.getInvoiceNo());
+    InvoiceEntity result = invoiceRepository.findByInvoice(id);
     ivInfo.setClientNo(result.getClientNo());
 
     dto.setInvoiceInfo(ivInfo);
@@ -52,7 +56,17 @@ public class SearchService {
     List<InvoiceEntity> result = invoiceRepository.findManyByInvoices(0);
     for (InvoiceEntity row : result) {
       InvoiceInfo ivInfo = new InvoiceInfo();
+      ivInfo.setInvoiceNo(row.getInvoiceNo());
       ivInfo.setClientNo(row.getClientNo());
+      ivInfo.setInvoiceStatus(row.getInvoiceStatus());
+      ivInfo.setInvoiceTitle(row.getInvoiceTitle());
+      ivInfo.setInvoiceAmt(row.getInvoiceAmt());
+      ivInfo.setTaxAmt(row.getTaxAmt());
+      ivInfo.setInvoiceStartDate(row.getInvoiceStartDate());
+      ivInfo.setInvoiceEndDate(row.getInvoiceEndDate());
+      ivInfo.setInvoiceNote(row.getInvoiceNote());
+      ClientEntity client = clientRepository.findOne(row.getClientNo());
+      ivInfo.setClientName(client.getClientName());
       ivInfoList.add(ivInfo);
     }
     dto.setInvoiceInfo(ivInfoList);

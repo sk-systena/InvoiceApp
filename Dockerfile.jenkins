@@ -1,0 +1,19 @@
+FROM debian:jessie
+RUN apt-get update -y && apt-get upgrade -y
+
+# Jenkinsスレーブとしての動作に必要なJava実行環境およびsshdをインストールする
+RUN apt-get install -y openjdk-8-jdk openssh-server
+
+# SSH接続で22番ポートを使用することを明示
+EXPOSE 22
+
+# Jenkinsが各種処理の実行に使用する「jenkins」ユーザーを作成する
+RUN groupadd jenkins && useradd -d /home/jenkins -g jenkins -m jenkins
+
+# jenkinsユーザーでログインするための公開鍵をコピー
+#※あらかじめfiles/id_jenkins.pubとして公開鍵を準備しておく
+RUN mkdir /home/jenkins/.ssh
+COPY files/id_jenkins.pub /home/jenkins/.ssh/authorized_keys
+RUN chown -R jenkins:jenkins /home/jenkins/.ssh \
+ && chmod 700 /home/jenkins/.ssh \
+ && chmod 600 /home/jenkins/.ssh/*
