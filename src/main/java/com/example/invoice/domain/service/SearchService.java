@@ -37,8 +37,9 @@ public class SearchService {
     InvoiceSearchResponseDto dto = new InvoiceSearchResponseDto();
     InvoiceInfo ivInfo = new InvoiceInfo();
     InvoiceEntity result = invoiceRepository.findByInvoice(id);
-    ivInfo.setClientNo(result.getClientNo());
-
+    if (result != null) {
+      setInvoiceInfo(result, ivInfo);
+    }
     dto.setInvoiceInfo(ivInfo);
     return dto;
   }
@@ -56,21 +57,24 @@ public class SearchService {
     List<InvoiceEntity> result = invoiceRepository.findManyByInvoices(0);
     for (InvoiceEntity row : result) {
       InvoiceInfo ivInfo = new InvoiceInfo();
-      ivInfo.setInvoiceNo(row.getInvoiceNo());
-      ivInfo.setClientNo(row.getClientNo());
-      ivInfo.setInvoiceStatus(row.getInvoiceStatus());
-      ivInfo.setInvoiceTitle(row.getInvoiceTitle());
-      ivInfo.setInvoiceAmt(row.getInvoiceAmt());
-      ivInfo.setTaxAmt(row.getTaxAmt());
-      ivInfo.setInvoiceStartDate(row.getInvoiceStartDate());
-      ivInfo.setInvoiceEndDate(row.getInvoiceEndDate());
-      ivInfo.setInvoiceNote(row.getInvoiceNote());
-      ClientEntity client = clientRepository.findOne(row.getClientNo());
-      ivInfo.setClientName(client.getClientName());
+      setInvoiceInfo(row, ivInfo);
       ivInfoList.add(ivInfo);
     }
     dto.setInvoiceInfo(ivInfoList);
     return dto;
   }
 
+  private void setInvoiceInfo(InvoiceEntity entity, InvoiceInfo ivInfo) {
+    ivInfo.setInvoiceNo(entity.getInvoiceNo());
+    ivInfo.setClientNo(entity.getClientNo());
+    ivInfo.setInvoiceStatus(entity.getInvoiceStatus());
+    ivInfo.setInvoiceTitle(entity.getInvoiceTitle());
+    ivInfo.setInvoiceAmt(entity.getInvoiceAmt());
+    ivInfo.setTaxAmt(entity.getTaxAmt());
+    ivInfo.setInvoiceStartDate(entity.getInvoiceStartDate());
+    ivInfo.setInvoiceEndDate(entity.getInvoiceEndDate());
+    ivInfo.setInvoiceNote(entity.getInvoiceNote());
+    ClientEntity client = clientRepository.findOne(entity.getClientNo());
+    ivInfo.setClientName(client.getClientName());
+  }
 }

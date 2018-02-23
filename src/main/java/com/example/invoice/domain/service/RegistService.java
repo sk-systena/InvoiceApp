@@ -1,10 +1,11 @@
 package com.example.invoice.domain.service;
 
+import com.example.invoice.domain.model.ClientEntity;
 import com.example.invoice.domain.model.InvoiceEntity;
-import com.example.invoice.domain.model.InvoiceInfo;
 import com.example.invoice.domain.model.InvoiceRegistRequestDto;
 import com.example.invoice.domain.model.InvoiceRegistResponseDto;
 import com.example.invoice.domain.model.OrderEntity;
+import com.example.invoice.domain.repository.ClientRepository;
 import com.example.invoice.domain.repository.InvoiceRepository;
 import com.example.invoice.domain.repository.OrderRepository;
 import java.util.Date;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RegistService {
+
+  @Autowired
+  ClientRepository clientRepository;
 
   @Autowired
   InvoiceRepository invoiceRepository;
@@ -35,6 +39,7 @@ public class RegistService {
     List<OrderEntity> orderList = orderRepository.find_priod_order(registReq.getInvoiceStartDate(),
         registReq.getInvoiceEndDate(), registReq.getClientNo());
 
+    // 登録請求 情報作成
     InvoiceEntity invoiceEntity = new InvoiceEntity();
     int amt = 0;
     Double tax = 0.08;
@@ -64,8 +69,18 @@ public class RegistService {
     invoiceEntity.setDelFlg(delFlg);
     invoiceRepository.save(invoiceEntity);
 
+    // レスポンスデータ作成
     InvoiceRegistResponseDto dto = new InvoiceRegistResponseDto();
-    InvoiceInfo invoiceInfo = new InvoiceInfo();
+    InvoiceEntity result = invoiceRepository.find_priod(registReq.getInvoiceStartDate(),
+        registReq.getInvoiceEndDate(), registReq.getClientNo());
+    dto.setInvoiceNo(result.getInvoiceNo());
+    dto.setInvoiceStatus(result.getInvoiceStatus());
+    dto.setInvoiceTitle(result.getInvoiceTitle());
+    dto.setInvoiceAmt(result.getInvoiceAmt());
+    dto.setTaxAmt(result.getTaxAmt());
+    dto.setInvoiceNote(result.getInvoiceNote());
+    ClientEntity client = clientRepository.findOne(result.getClientNo());
+    dto.setClientName(client.getClientName());
     return dto;
   }
 }
